@@ -7,13 +7,11 @@ namespace TechJobsConsoleAutograded6
         public void RunProgram()
         {
             // Create two Dictionary vars to hold info for menu and data
-
             // Top-level menu options
             Dictionary<string, string> actionChoices = new Dictionary<string, string>();
             actionChoices.Add("search", "Search");
             actionChoices.Add("list", "List");
 
-            // Column options
             Dictionary<string, string> columnChoices = new Dictionary<string, string>();
             columnChoices.Add("core competency", "Skill");
             columnChoices.Add("employer", "Employer");
@@ -59,12 +57,14 @@ namespace TechJobsConsoleAutograded6
 
                     // What is their search term?
                     Console.WriteLine(Environment.NewLine + "Search term: ");
+                    
                     string searchTerm = Console.ReadLine();
 
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        List<Dictionary<string, string>> searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
                     }
                     else
                     {
@@ -137,19 +137,18 @@ namespace TechJobsConsoleAutograded6
         {
             if(someJobs.Count == 0)
             {
-                Console.WriteLine("No Results");
+                Console.WriteLine("No results");
                 return;
             }
 
             foreach(Dictionary<string, string> job in someJobs)
             {
-                Console.WriteLine("*****");
+                Console.WriteLine(Environment.NewLine + "*****");
                 foreach(KeyValuePair<string, string> field in job)
                 {
                     Console.WriteLine($"{field.Key}: {field.Value}");
                 }
                 Console.WriteLine("*****");
-                Console.WriteLine();
             }
         }
     }
